@@ -346,7 +346,7 @@ The context: Religious beliefs vs. medical judgment, child cannot consent, serio
 
         // Main App Component
         function App() {
-            const [stage, setStage] = useState('welcome'); // welcome, tutorial, cases, pattern, complete
+            const [stage, setStage] = useState('welcome'); // welcome, tutorial, responsibility, cases, pattern, complete
             const [studentInfo, setStudentInfo] = useState({
                 name: '',
                 email: '',
@@ -454,7 +454,10 @@ The context: Religious beliefs vs. medical judgment, child cannot consent, serio
                             <WelcomeScreen onStart={startModule} />
                         )}
                         {stage === 'tutorial' && (
-                            <TutorialScreen onComplete={startCases} />
+                            <TutorialScreen onComplete={() => setStage('responsibility')} />
+                        )}
+                        {stage === 'responsibility' && (
+                            <ResponsibilityScreen onComplete={startCases} />
                         )}
                         {stage === 'cases' && (
                             <CaseWorkflow 
@@ -511,6 +514,17 @@ The context: Religious beliefs vs. medical judgment, child cannot consent, serio
                                 <li><strong>Constructor:</strong> Do patterns persist or depend on individuals?</li>
                                 <li><strong>Meta-Constructor:</strong> Can the system examine and improve itself?</li>
                             </ul>
+                            
+                            <div className="bg-purple-50 border-l-4 border-purple-500 p-6 mt-6">
+                                <h3 className="text-lg font-bold text-purple-900 mb-2">Why Diagnosis Matters</h3>
+                                <p className="text-gray-700 text-base">
+                                    This isn't just an intellectual exercise. <strong>Misdiagnosis causes real harm:</strong> it 
+                                    wastes resources, blames the wrong people, and leaves root causes untouched. Correct diagnosis 
+                                    determines what intervention can work and who is responsible for implementing it. You'll learn 
+                                    not just to identify problems, but to understand who has the power to fix them and what ethical 
+                                    obligations follow from that power.
+                                </p>
+                            </div>
                         </div>
                     </div>
 
@@ -698,11 +712,211 @@ The context: Religious beliefs vs. medical judgment, child cannot consent, serio
                     </div>
 
                     <div className="bg-white rounded-lg shadow-lg p-8">
+                        <button
+                            onClick={onComplete}
+                            className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+                        >
+                            Continue: Why Diagnosis Matters →
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        // Responsibility Screen Component - NEW SECTION
+        function ResponsibilityScreen({ onComplete }) {
+            return (
+                <div className="fade-in max-w-4xl mx-auto">
+                    <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Diagnosis Matters: Ethics and Responsibility</h2>
+                        
+                        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 mb-6">
+                            <p className="text-lg text-gray-800">
+                                You might be wondering: <strong>Why does it matter which level we diagnose the problem at? 
+                                Can't we just try to fix things and see what works?</strong>
+                            </p>
+                        </div>
+
+                        <p className="text-gray-700 mb-6">
+                            Here's why diagnosis is ethically essential, not just intellectually interesting:
+                        </p>
+
+                        <div className="space-y-6 mb-8">
+                            <div className="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                                <h3 className="text-xl font-bold text-red-900 mb-3">1. Misdiagnosis Harms People</h3>
+                                <p className="text-gray-700 mb-3">
+                                    If you misdiagnose a capacity problem as a capability problem, you end up blaming and "training" 
+                                    people who are already trying their best under impossible conditions.
+                                </p>
+                                <p className="text-gray-700">
+                                    <strong>This is not just ineffective—it's a form of injustice.</strong> It's like telling a 
+                                    drowning person they need swimming lessons.
+                                </p>
+                            </div>
+
+                            <div className="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
+                                <h3 className="text-xl font-bold text-orange-900 mb-3">2. Misdiagnosis Wastes Resources</h3>
+                                <p className="text-gray-700">
+                                    Organizations have limited time, money, and attention. If you invest in the wrong intervention 
+                                    (training when you need to change workloads, or changing workloads when you need better procedures), 
+                                    you waste those resources while the real problem persists.
+                                </p>
+                            </div>
+
+                            <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500">
+                                <h3 className="text-xl font-bold text-purple-900 mb-3">3. Misdiagnosis Protects the Wrong People</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Often, misdiagnosis serves someone's interests. Hospital administrators might prefer to think 
+                                    nurses need compassion training (cheap, blames nurses) rather than admit staffing is inadequate 
+                                    (expensive, blames management).
+                                </p>
+                                <p className="text-gray-700">
+                                    <strong>Correct diagnosis exposes who is actually responsible.</strong>
+                                </p>
+                            </div>
+
+                            <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                                <h3 className="text-xl font-bold text-blue-900 mb-3">4. Diagnosis Determines Who Must Act</h3>
+                                <p className="text-gray-700 mb-3">
+                                    Different problems require different people to take action:
+                                </p>
+                                <ul className="space-y-2 text-gray-700">
+                                    <li><strong>Capacity problems:</strong> Those who control contexts (managers, investors, policymakers)</li>
+                                    <li><strong>Capability problems:</strong> Those who design systems and training (educators, process designers)</li>
+                                    <li><strong>Constructor problems:</strong> Those who institutionalize practices (founders, HR, succession planners)</li>
+                                    <li><strong>Meta-constructor problems:</strong> Those who control governance (legislators, boards)</li>
+                                </ul>
+                                <p className="text-gray-700 mt-3">
+                                    If you misdiagnose, you're asking the wrong people to act, and nothing changes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-6">The Responsibility Chain</h3>
+                        
+                        <div className="space-y-6">
+                            <div className="bg-gradient-to-r from-blue-100 to-blue-50 p-6 rounded-lg">
+                                <h4 className="text-lg font-bold text-blue-900 mb-2">Capacity Problems → Contextual Responsibility</h4>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Who has power?</strong> Management, investors, policymakers—those who set workloads, 
+                                    budgets, regulations, and organizational culture
+                                </p>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Their ethical obligation:</strong> Don't create contexts that systematically degrade capacity. 
+                                    When capacity is suppressed, change the context, don't blame individuals.
+                                </p>
+                                <p className="text-gray-600 text-sm">
+                                    <strong>Traditional ethics connection:</strong> Mill (harm principle), Rawls (justice requires 
+                                    protecting capacity), Care ethics (supporting others requires addressing contexts)
+                                </p>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-green-100 to-green-50 p-6 rounded-lg">
+                                <h4 className="text-lg font-bold text-green-900 mb-2">Capability Problems → Training & Systems Responsibility</h4>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Who has power?</strong> Educators, trainers, process designers, managers—those who 
+                                    develop skills and create protocols
+                                </p>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Their ethical obligation:</strong> Develop clear, practiced, reliable methods. 
+                                    Don't assume people "should just know" how to do complex things. Provide specifications, not just values.
+                                </p>
+                                <p className="text-gray-600 text-sm">
+                                    <strong>Traditional ethics connection:</strong> Aristotle (virtue requires practice), 
+                                    Confucius (clear rituals maintain coordination), Dewey (learning by doing)
+                                </p>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-100 to-purple-50 p-6 rounded-lg">
+                                <h4 className="text-lg font-bold text-purple-900 mb-2">Constructor Problems → Institutional Design Responsibility</h4>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Who has power?</strong> Founders, HR, organizational development, succession planners—those 
+                                    who shape and institutionalize culture
+                                </p>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Their ethical obligation:</strong> Don't let critical practices depend on heroic individuals. 
+                                    Build persistent structures. Document and train systematically.
+                                </p>
+                                <p className="text-gray-600 text-sm">
+                                    <strong>Traditional ethics connection:</strong> Virtue ethics (habit becomes institution), 
+                                    Confucianism (ritual carries patterns forward), Social contract theory (institutions structure interactions)
+                                </p>
+                            </div>
+
+                            <div className="bg-gradient-to-r from-red-100 to-red-50 p-6 rounded-lg">
+                                <h4 className="text-lg font-bold text-red-900 mb-2">Meta-Constructor Problems → Governance Responsibility</h4>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Who has power?</strong> Legislators, board members, constitutional designers—those who 
+                                    control "the rules about rules"
+                                </p>
+                                <p className="text-gray-700 mb-3">
+                                    <strong>Their ethical obligation:</strong> Build in learning mechanisms, feedback loops, and review processes. 
+                                    Create safe channels for challenge and revision. Include sunset clauses.
+                                </p>
+                                <p className="text-gray-600 text-sm">
+                                    <strong>Traditional ethics connection:</strong> Rawls (justice requires revisable institutions), 
+                                    Kant (kingdom of ends requires self-legislation capacity), Dewey (democratic experimentalism)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Your Position Determines Your Responsibility</h3>
+                        <p className="text-gray-700 mb-4">
+                            As you develop diagnostic skill, you'll realize:
+                        </p>
+                        <div className="space-y-3 text-gray-700 mb-6">
+                            <div className="flex items-start">
+                                <span className="text-purple-600 mr-2">•</span>
+                                <p>
+                                    If you're a <strong>frontline worker</strong> (like a nurse), your responsibility is to maintain 
+                                    capacity and use capabilities well—but you're not responsible for fixing systemic problems beyond 
+                                    your control
+                                </p>
+                            </div>
+                            <div className="flex items-start">
+                                <span className="text-purple-600 mr-2">•</span>
+                                <p>
+                                    If you're a <strong>manager</strong>, you're responsible for creating contexts that don't degrade 
+                                    capacity and for ensuring people have needed capabilities
+                                </p>
+                            </div>
+                            <div className="flex items-start">
+                                <span className="text-purple-600 mr-2">•</span>
+                                <p>
+                                    If you're an <strong>investor or board member</strong>, you're responsible for resource allocation 
+                                    that makes good practice possible
+                                </p>
+                            </div>
+                            <div className="flex items-start">
+                                <span className="text-purple-600 mr-2">•</span>
+                                <p>
+                                    If you're a <strong>policymaker</strong>, you're responsible for governance structures that enable 
+                                    or prevent ethical functioning
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-purple-100 to-purple-50 p-6 rounded-lg">
+                            <p className="text-lg font-semibold text-purple-900 mb-3">
+                                The diagnostic skill you're developing isn't just academic—it's about knowing where to look, 
+                                what to change, and who needs to act.
+                            </p>
+                            <p className="text-gray-700">
+                                In Module 3 (Design Studio), you'll learn how to design interventions targeted at the right level. 
+                                But you can't design good interventions without accurate diagnosis.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-lg p-8">
                         <h3 className="text-xl font-bold text-gray-900 mb-3">Ready to Practice?</h3>
                         <p className="text-gray-700 mb-6">
-                            You'll start with clear cases that illustrate each level individually, then progress to 
-                            more complex multi-level cases. Remember: there's no penalty for mistakes during practice - 
-                            this is about learning!
+                            Now that you understand why diagnosis matters and how it connects to responsibility and traditional 
+                            ethics, you're ready to develop this skill through practice with real cases.
                         </p>
                         <button
                             onClick={onComplete}
